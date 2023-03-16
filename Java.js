@@ -2,12 +2,12 @@ var started = false;
 var level = 0;
 var points = 0;
 // var lifeHeart = "❤️";
-var life = 70;
+// var life = 70;
 var correct = 0;
 var incorrect = 0;
 var total = correct + incorrect;
 // lifeHeart = "❤️".repeat(life);
-
+document.getElementById("lastBtn2")?.setAttribute("onClick", () => {restart()});
 
 function Question1(question, ans1, ans2, ans3, ans4, answer) {
   const arr = [];
@@ -21,18 +21,21 @@ function Question1(question, ans1, ans2, ans3, ans4, answer) {
 
   if (started === false) {
 
-    document.getElementById("lastBtn").disabled = false;
+    // document.getElementById("lastBtn").disabled = false;
     document.getElementById("lastBtn2").disabled = true;
-    document.getElementById("lastBtn").innerHTML = "Continue";
+    document.getElementById("lastBtn").innerHTML = "Start";
     document.getElementById("lastBtn2").innerHTML = "Restart";
-    document.querySelectorAll("h1")[1].innerHTML = ("💔 " + life);
-    document.getElementById("lastBtn")?.addEventListener("click", function easy() {
-      return 100;
+    document.querySelectorAll("h1")[1].innerHTML = ("🔴 " + incorrect);
+    // !started ? level + 1 : null
+    document.getElementById("lastBtn")?.addEventListener("click", function() {
+      nextSequence();
     });
 
     document.getElementById("lastBtn2")?.addEventListener("click", function() {
       window.location.reload();
     });
+    // document.getElementById("lastBtn2")?.setAttribute("onClick", () => {restart()});
+
 
     document.getElementById("f2").innerHTML = "Good Luck!";
 
@@ -260,6 +263,41 @@ document.getElementById("lastBtn").addEventListener("click", function() {
 });
 
 
+document.getElementById("lastBtn")?.addEventListener("click", function() {
+
+
+  if (started) {
+    elementBuilder("questions2", "1ques");
+    elementBuilder("a0", "1answer");
+
+    level = 0;
+
+    document.getElementById("lastBtn2").disabled = false;
+    document.getElementById("f2").innerHTML = "Good Luck!";
+    document.querySelectorAll("h1")[0].innerHTML = ("🟢 " + points);
+    document.querySelectorAll("h1")[1].innerHTML = ("🔴 " + incorrect);
+
+    for (var i = 0; i < 4; i++) {
+      firstOne(hold[level].question, "a0", hold[level].ans[i]);
+    }
+    // document.getElementById("lastBtn").disabled = false;
+    started = true;
+    // document.querySelector(".progress-bar").setAttribute("style", "width: "+ 62 +"%;" + "aria-valuenow='25' aria-valuemin='0' aria-valuemax='62'");
+    // document.querySelector(".progress-bar").innerHTML = level +"%";
+
+
+    checkAnswer(hold[level].answer);
+
+  }
+
+
+
+});
+
+
+
+console.log(level)
+
 document.addEventListener("keydown", function() {
   function elementBuilder(id, classs) {
     const div = document.createElement("div");
@@ -278,16 +316,18 @@ document.addEventListener("keydown", function() {
     level = 0;
     document.getElementById("lastBtn2").disabled = false;
     document.getElementById("f2").innerHTML = "Good Luck!";
-    document.querySelectorAll("h1")[0].innerHTML = ("Score: " + points);
-    document.querySelectorAll("h1")[1].innerHTML = ("💔 " + life);
+    document.querySelectorAll("h1")[0].innerHTML = ("🟢 " + points);
+    document.querySelectorAll("h1")[1].innerHTML = ("🔴 " + incorrect);
 
     for (var i = 0; i < 4; i++) {
       firstOne(hold[level].question, "a0", hold[level].ans[i]);
     }
     // document.getElementById("lastBtn").disabled = false;
     started = true;
-    document.querySelector(".progress-bar").setAttribute("style", "width: "+level+1 +"%;" + "aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'");
+    document.querySelector(".progress-bar").setAttribute("style", "width: "+level+1 +"%;" + "aria-valuenow='25' aria-valuemin='0' aria-valuemax='62'");
     document.querySelector(".progress-bar").innerHTML = level +1 +"%";
+    // document.getElementById("lastBtn").innerHTML = "Continue";
+    document.getElementById("lastBtn").disabled = true;
 
 
     checkAnswer(hold[level].answer);
@@ -301,6 +341,7 @@ document.addEventListener("keydown", function() {
 
 // Check Answer
 function checkAnswer(answer) {
+
   for (var b = 0; b < 4; b++) {
     document.querySelectorAll(".btn")[b]?.addEventListener("click", function() {
       const tu = this.innerHTML;
@@ -309,7 +350,7 @@ function checkAnswer(answer) {
       if (tu == answer) {
         correct = correct + 1;
         points = points + 1;
-        document.querySelectorAll("h1")[0].innerHTML = ("Score: " + points);
+        document.querySelectorAll("h1")[0].innerHTML = ("🟢 " + points);
 
         for (var i = 0; i < 4; i++) {
           document.querySelectorAll(".btn")[i].disabled = true;
@@ -324,9 +365,9 @@ function checkAnswer(answer) {
           document.querySelectorAll(".btn")[i].disabled = true;
         }
         document.getElementById("f2").innerHTML = "That's incorrect!";
-        life = life - 1;
-        lifeHeart = "❤️".repeat(life);
-        document.querySelectorAll("h1")[1].innerHTML = (lifeHeart);
+        // life = life - 1;
+        // lifeHeart = "❤️".repeat(life);
+        document.querySelectorAll("h1")[1].innerHTML = ("🔴 " + incorrect);
         document.getElementById("f2")?.appendChild(makeUL(answer));
 
       }
@@ -362,6 +403,8 @@ function makeUL(array) {
 }
 
 
+
+
 function firstOne(title, id, question) {
   document.querySelector("#questions2").innerHTML = title;
   // label
@@ -389,12 +432,15 @@ function restartButton(id) {
 }
 
 function nextSequence(lvl) {
-  document.getElementById("lastBtn2").addEventListener("click", function() {
-    location.reload();
-  });
-var bar = level + 1;
-  document.querySelector(".progress-bar").setAttribute("style", "width: "+ bar +"%;" + "aria-valuenow='"+bar +"' aria-valuemin='0' aria-valuemax='" +hold.length+"'");
-  document.querySelector(".progress-bar").innerHTML = level +1 +"%";
+  document.getElementById("lastBtn").innerHTML = "Continue";
+  document.getElementById("lastBtn2").disabled = false;
+  function perc(a) {
+    return a / hold.length * 100
+  }
+  var bar = perc(level)
+
+  document.querySelector(".progress-bar").setAttribute("style", "width: " + bar + "%;");
+  // document.querySelector(".progress-bar").innerHTML =  +"%";
 
 
   document.getElementById("lastBtn").disabled = true;
@@ -425,14 +471,14 @@ var bar = level + 1;
 
   checkAnswer(hold[lvl]?.answer);
 
-  if (level == hold.length || life == 0) {
+  if (level == hold.length) {
 
     var total = correct + incorrect;
-    document.querySelector(".progress-bar").setAttribute("style", "width: "+ total +"%;" + "aria-valuenow='"+total +"' aria-valuemin='0' aria-valuemax='" +hold.length+"'");
-    document.querySelector(".progress-bar").innerHTML = total +"%";
+    document.querySelector(".progress-bar").setAttribute("style", "width: " + bar + "%;");
+    document.querySelector(".progress-bar").innerHTML = 100 +"%";
     started = false;
     removeElement("questions2", "a0");
-    document.querySelectorAll("h1")[0].innerHTML = "Correct: " + correct + "<br>" + " Total: " + total;
+    document.querySelectorAll("h1")[0].innerHTML = "🟢  " + correct + "<br>" + "🔵 " + total;
     document.getElementById("f2").innerHTML = ending();
 
     function ending() {
@@ -446,8 +492,8 @@ var bar = level + 1;
     }
     // document.getElementById("lastBtn").disabled = false;
 
-    document.getElementById("lastBtn2")?.addEventListener("click", function() {
-      window.location.reload();
-    });
+    // document.getElementById("lastBtn2")?.addEventListener("click", function() {
+    //   window.location.reload();
+    // });
   }
 }

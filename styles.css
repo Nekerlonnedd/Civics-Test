@@ -4,31 +4,39 @@
 
 
 
+body {
+margin-top: 5rem;
+  min-height: 70vh;
+  padding: 1rem;
+  box-sizing: border-box;
 
-
-
-
-
-
-.b {
-  /* margin-left: 100px; */
-  text-align: left;
+  justify-content: center;
+  align-items: center;
+  color: hsl(198, 1%, 29%);
+  font-family: sans-serif;
+  text-align: center;
+  font-size: 130%;
 }
 
-.a {
+
+
+
+
+
+.a, .b {
   font-weight: bold;
   font-size: 2rem;
-  text-align: left;
-
-
-}
-
-body {
-  font-family: sans-serif;
-  margin-top: 5rem;
   text-align: center;
 
+
 }
+
+/* body {
+
+
+  text-align: center;
+
+} */
 #f2  {
   font-size: 20px;
   text-align: center;
