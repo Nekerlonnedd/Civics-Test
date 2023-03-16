@@ -325,8 +325,8 @@ function checkAnswer(answer) {
         }
         document.getElementById("f2").innerHTML = "That's incorrect!";
         life = life - 1;
-        lifeHeart = "❤️".repeat(life);
-        document.querySelectorAll("h1")[1].innerHTML = (lifeHeart);
+//         lifeHeart = "❤️".repeat(life);
+        document.querySelectorAll("h1")[1].innerHTML = ("💔 " + life);
         document.getElementById("f2")?.appendChild(makeUL(answer));
 
       }
