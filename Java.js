@@ -1,12 +1,12 @@
 var started = false;
 var level = 0;
 var points = 0;
-var lifeHeart = "❤️";
-var life = 5;
+// var lifeHeart = "❤️";
+var life = 70;
 var correct = 0;
 var incorrect = 0;
 var total = correct + incorrect;
-lifeHeart = "❤️".repeat(life);
+// lifeHeart = "❤️".repeat(life);
 
 
 function Question1(question, ans1, ans2, ans3, ans4, answer) {
@@ -21,14 +21,20 @@ function Question1(question, ans1, ans2, ans3, ans4, answer) {
 
   if (started === false) {
 
-    document.getElementById("lastBtn").disabled = true;
+    document.getElementById("lastBtn").disabled = false;
     document.getElementById("lastBtn2").disabled = true;
-    document.querySelectorAll("h1")[1].innerHTML = (lifeHeart);
+    document.getElementById("lastBtn").innerHTML = "Continue";
+    document.getElementById("lastBtn2").innerHTML = "Restart";
+    document.querySelectorAll("h1")[1].innerHTML = ("💔 " + life);
+    document.getElementById("lastBtn")?.addEventListener("click", function easy() {
+      return 100;
+    });
+
     document.getElementById("lastBtn2")?.addEventListener("click", function() {
       window.location.reload();
     });
 
-    document.getElementById("f2").innerHTML = "Press Any Key To Start!";
+    document.getElementById("f2").innerHTML = "Good Luck!";
 
   }
   let y = [ans1, ans2, ans3, ans4];
@@ -273,7 +279,7 @@ document.addEventListener("keydown", function() {
     document.getElementById("lastBtn2").disabled = false;
     document.getElementById("f2").innerHTML = "Good Luck!";
     document.querySelectorAll("h1")[0].innerHTML = ("Score: " + points);
-    document.querySelectorAll("h1")[1].innerHTML = (lifeHeart);
+    document.querySelectorAll("h1")[1].innerHTML = ("💔 " + life);
 
     for (var i = 0; i < 4; i++) {
       firstOne(hold[level].question, "a0", hold[level].ans[i]);
